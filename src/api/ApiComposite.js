@@ -1,6 +1,7 @@
 import { UsersApi } from './resources/UsersApi';
 import { ProfilesApi } from './resources/ProfilesApi';
 import { ArticlesApi } from './resources/ArticlesApi';
+import { CommentsApi } from './resources/CommentsApi';
 
 export class ApiComposite {
   constructor(client) {
@@ -8,6 +9,7 @@ export class ApiComposite {
     this.users = new UsersApi(client);
     this.profiles = new ProfilesApi(client);
     this.articles = new ArticlesApi(client);
+    this.comments = new CommentsApi(client);
   }
 
   async registerNewUser(userData, token = null) {
