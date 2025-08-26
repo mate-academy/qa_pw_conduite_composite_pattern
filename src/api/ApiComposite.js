@@ -44,12 +44,16 @@ export class ApiComposite {
     return await this.articles.getArticleBySlug(slug, token);
   }
 
+  async getComments(slug, token = null) {
+    return await this.comments.getComments(slug, token);
+  }
+
   async createComment(slug, body, token = null) {
     return await this.comments.createComment(slug, body, token);
   }
 
-  async deleteComment(slug, body, token = null) {
-    return await this.comments.deleteComment(slug, body, token);
+  async deleteComment(slug, commentId, token = null) {
+    return await this.comments.deleteComment(slug, commentId, token);
   }
 
   async assertSuccessResponseCode(response) {

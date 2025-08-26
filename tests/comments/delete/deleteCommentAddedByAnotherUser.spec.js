@@ -8,7 +8,6 @@ test('Delete comment added by another user', async ({ registeredUsers, api, arti
 
   const responseArticle = await api.articles.createArticle(articleWithOneTag, author.token);
   await api.articles.assertSuccessResponseCode(responseArticle);
-
   const { article } = await responseArticle.json();
   const slug = article.slug;
 
@@ -17,8 +16,8 @@ test('Delete comment added by another user', async ({ registeredUsers, api, arti
   await api.comments.assertSuccessResponseCode(responseComment);
 
   const { comment } = await responseComment.json();
+  const commentId = comment.id;
 
-  const deleteResponse = await api.comments.deleteComment(slug, comment.id, anotherUser.token);
-
+  const deleteResponse = await api.comments.deleteComment(slug, commentId, anotherUser.token);
   await api.comments.assertForbiddenResponseCode(deleteResponse);
 });

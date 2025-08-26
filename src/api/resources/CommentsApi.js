@@ -7,6 +7,17 @@ export class CommentsApi extends BaseApi {
     this._headers = { 'content-type': 'application/json' };
   }
 
+  async getComments(slug, token = null) {
+    return await this.step(`Get comments for article ${slug}`, async () => {
+      return await this.client.get(ROUTES.comments(slug).index, {
+        headers: {
+          authorization: token ? `Token ${token}` : undefined,
+          ...this._headers,
+        },
+      });
+    });
+  }
+
   async createComment(slug, body, token = null) {
     return await this.step(`Create new comment`, async () => {
       return await this.client.post(ROUTES.comments(slug).index, {

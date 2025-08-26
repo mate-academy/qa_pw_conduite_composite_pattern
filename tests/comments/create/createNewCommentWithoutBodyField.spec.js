@@ -12,5 +12,5 @@ test('Create new comment without body field', async ({ registeredUser, api, arti
     registeredUser.token
   );
 
-  await api.comments.assertSuccessResponseCode(response);
+  await api.comments.assertUnprocessableEntityResponseCode(response);
 });
