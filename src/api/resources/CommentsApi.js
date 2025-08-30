@@ -10,25 +10,42 @@ export class CommentsApi extends BaseApi {
 
   async createComment(slug, comment = null, token = null) {
     return await this.step(`Create new comment`, async () => {
-      return await this.client.post(ROUTES.comments(slug).create, {
+      const headers = {
+        ...this._headers,
+        ...(token ? { authorization: `Token ${token}` } : {}),
+      };
+
+      return await this.client.post(ROUTES.comments(slug).index, {
         data: {
           ...(comment ? { comment: { body: comment } } : {}),
         },
-        headers: {
-          authorization: `Token ${token}`,
-          ...this._headers,
-        },
+        headers,
+      });
+    });
+  }
+
+  async getComments(slug, token = null) {
+    return await this.step(`Get comments`, async () => {
+      const headers = {
+        ...this._headers,
+        ...(token ? { authorization: `Token ${token}` } : {}),
+      };
+
+      return await this.client.get(ROUTES.comments(slug).index, {
+        headers,
       });
     });
   }
 
   async deleteComment(slug, commentId, token = null) {
     return await this.step(`Delete comment with id ${commentId}`, async () => {
-      return await this.client.delete(ROUTES.comments(slug, commentId).delete, {
-        headers: {
-          authorization: `Token ${token}`,
-          ...this._headers,
-        },
+      const headers = {
+        ...this._headers,
+        ...(token ? { authorization: `Token ${token}` } : {}),
+      };
+
+      return await this.client.delete(ROUTES.comments(slug, commentId).single, {
+        headers,
       });
     });
   }
@@ -45,6 +62,7 @@ export class CommentsApi extends BaseApi {
       expect(body.comment.id).not.toBeNull();
       expect(body.comment.id).not.toEqual('');
     });
+
     return body.comment.id;
   }
 
