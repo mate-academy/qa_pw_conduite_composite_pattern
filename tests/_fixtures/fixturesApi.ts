@@ -3,7 +3,7 @@ import { ApiComposite } from '../../src/api/ApiComposite';
 import { ApiClientFacade } from '../../src/api/ApiClientFacade';
 
 export const test = base.extend<{
-  api;
+  api: ApiComposite;
 }>({
   api: async ({ request, logger }, use) => {
     const apiClientFacade = new ApiClientFacade({ request, logger });
