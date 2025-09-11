@@ -13,11 +13,15 @@ export class ApiComposite {
   }
 
   async createComment(comment, article, token = null) {
-    return await this.comments.createComment(comment, article, token);
+    return await this.comments.createComment(comment, article.slug, token);
   }
 
   async deleteComment(commentId, article, token = null) {
-    return await this.comments.deleteComment(commentId, article, token);
+    return await this.comments.deleteComment(commentId, article.slug, token);
+  }
+
+  async getComments(article, token = null) {
+    return await this.comments.getComments(article.slug, token);
   }
 
   async registerNewUser(userData, token = null) {
@@ -55,5 +59,5 @@ export class ApiComposite {
   async assertSuccessResponseCode(response) {
     await this.users.assertSuccessResponseCode(response);
   }
-  
+
 }

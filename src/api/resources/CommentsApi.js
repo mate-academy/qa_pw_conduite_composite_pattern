@@ -10,12 +10,23 @@ export class CommentsApi extends BaseApi {
 
   }
 
-  async createComment (comment, article, token = null) {
+  async getComments(slug, token = null) {
+    return await this.step(`Get comments for article`, async () => {
+      return await this.client.get(ROUTES.comments(slug).index, {
+        headers: {
+          authorization: token ? `Token ${token}` : undefined,
+          ...this._headers,
+        },
+      });
+    });
+  }
+
+  async createComment(comment, slug, token = null) {
     return await this.step('Create a new comment', async () => {
-      return await this.client.post(ROUTES.comments(article.slug).create, {
-          data: this.createCommentData(comment),
+      return await this.client.post(ROUTES.comments(slug).create, {
+          data: comment ? this.createCommentData(comment) : undefined,
           headers: {
-            authorization: `Token ${token}`,
+            authorization: token ? `Token ${token}` : undefined,
             ...this._headers,
         },
       });
@@ -23,14 +34,14 @@ export class CommentsApi extends BaseApi {
     });
   }
 
-  async deleteComment (commentResponse, article, token = null) {
+  async deleteComment(commentResponse, slug, token = null) {
     return await this.step('Delete a new comment', async () => {
       const id = await this.getCommentId(commentResponse);
       return await this.client.delete(
-        ROUTES.comments(article.slug, id).delete
+        ROUTES.comments(slug, id).delete
         , {
         headers: {
-          authorization: `Token ${token}`,
+          authorization: token ? `Token ${token}` : undefined,
           ...this._headers,
         },
       });

@@ -58,15 +58,15 @@ test.describe('Add comments API suite', () => {
     registeredUsers,
   }) => {
 
-    article.body = null;
-    const myComment = faker.lorem.sentence();
     const response = await commentsApi.createComment(
-      myComment,
+      '',
       article,
       registeredUsers[1].token,
     )
 
-    await commentsApi.assertSuccessResponseCode(response);
+    await commentsApi.comments.assertUnprocessableEntityResponseCode(
+      response
+    );
 
   });
 
