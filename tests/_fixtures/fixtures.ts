@@ -5,6 +5,7 @@ import { test as profilesApiTest } from './fixturesProfilesApi';
 import { test as articlesApiTest } from './fixturesArticlesApi';
 import { test as testDataGeneratorsTest } from './fixturesTestDataGenerators';
 import { test as apiTest } from './fixturesApi';
+import { test as commentsApiTest } from './fixturesComments';
 
 export const test = mergeTests(
   usersApiTest,
@@ -13,4 +14,5 @@ export const test = mergeTests(
   articlesApiTest,
   testDataGeneratorsTest,
   apiTest,
+  commentsApiTest
 );
