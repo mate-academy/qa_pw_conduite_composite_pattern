@@ -16,8 +16,8 @@ export class ApiComposite {
     return await this.comments.createComment(comment, article.slug, token);
   }
 
-  async deleteComment(commentId, article, token = null) {
-    return await this.comments.deleteComment(commentId, article.slug, token);
+  async deleteComment(id, article, token = null) {
+    return await this.comments.deleteComment(id, article.slug, token);
   }
 
   async getComments(article, token = null) {

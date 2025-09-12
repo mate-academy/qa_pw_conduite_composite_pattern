@@ -14,8 +14,8 @@ export class CommentsApi extends BaseApi {
     return await this.step(`Get comments for article`, async () => {
       return await this.client.get(ROUTES.comments(slug).index, {
         headers: {
-          authorization: token ? `Token ${token}` : undefined,
           ...this._headers,
+          ...(token ? { authorization: `Token ${token}` } : {}),
         },
       });
     });
@@ -24,10 +24,12 @@ export class CommentsApi extends BaseApi {
   async createComment(comment, slug, token = null) {
     return await this.step('Create a new comment', async () => {
       return await this.client.post(ROUTES.comments(slug).create, {
-          data: comment ? this.createCommentData(comment) : undefined,
+          data: {
+            ...(comment ? { comment: { body: comment } } : {}),
+          },
           headers: {
-            authorization: token ? `Token ${token}` : undefined,
             ...this._headers,
+            ...(token ? { authorization: `Token ${token}` } : {}),
         },
       });
 
@@ -41,8 +43,8 @@ export class CommentsApi extends BaseApi {
         ROUTES.comments(slug, id).delete
         , {
         headers: {
-          authorization: token ? `Token ${token}` : undefined,
           ...this._headers,
+          ...(token ? { authorization: `Token ${token}` } : {}),
         },
       });
     });

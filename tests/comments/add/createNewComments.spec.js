@@ -10,12 +10,12 @@ test.describe('Add comments API suite', () => {
     registeredUsers, articlesApi, articleWithOneTag  }) => {
 
     article = articleWithOneTag;
-    const responseArticle = await articlesApi.createArticle(
+    const response = await articlesApi.createArticle(
       article,
       registeredUsers[0].token,
     );
-    await articlesApi.assertSuccessResponseCode(responseArticle);
-    article['slug'] = await articlesApi.parseSlugFromResponse(responseArticle);
+    await articlesApi.assertSuccessResponseCode(response);
+    article['slug'] = await articlesApi.parseSlugFromResponse(response);
   })
 
 
@@ -59,7 +59,7 @@ test.describe('Add comments API suite', () => {
   }) => {
 
     const response = await commentsApi.createComment(
-      '',
+      null,
       article,
       registeredUsers[1].token,
     )

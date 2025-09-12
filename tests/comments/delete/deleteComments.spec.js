@@ -11,12 +11,12 @@ test.describe('Delete comments API suite', () => {
     registeredUsers, articlesApi, articleWithOneTag }) => {
 
     article = articleWithOneTag;
-    const responseArticle = await articlesApi.createArticle(
+    const response = await articlesApi.createArticle(
       article,
       registeredUsers[0].token,
     );
-    await articlesApi.assertSuccessResponseCode(responseArticle);
-    article['slug'] = await articlesApi.parseSlugFromResponse(responseArticle);
+    await articlesApi.assertSuccessResponseCode(response);
+    article['slug'] = await articlesApi.parseSlugFromResponse(response);
   })
 
 
@@ -26,14 +26,15 @@ test.describe('Delete comments API suite', () => {
   }) => {
 
     const myComment = faker.lorem.sentence();
-    const responseComment = await commentsApi.createComment(
+    const createCommentResponse = await commentsApi.createComment(
       myComment,
       article,
       registeredUsers[1].token,
     );
+    commentsApi.comments.assertSuccessResponseCode(createCommentResponse);
 
     const responseDelete = await commentsApi.deleteComment(
-      responseComment,
+      createCommentResponse,
       article,
       registeredUsers[1].token,
     );
@@ -48,14 +49,15 @@ test.describe('Delete comments API suite', () => {
 
 
     const myComment = faker.lorem.sentence();
-    const responseComment = await commentsApi.createComment(
+    const createCommentResponse = await commentsApi.createComment(
       myComment,
       article,
       registeredUsers[0].token,
     );
+    commentsApi.comments.assertSuccessResponseCode(createCommentResponse);
 
     const responseDelete = await commentsApi.deleteComment(
-      responseComment,
+      createCommentResponse,
       article,
       registeredUsers[1].token,
     );
