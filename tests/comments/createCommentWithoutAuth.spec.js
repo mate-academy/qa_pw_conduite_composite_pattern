@@ -1,6 +1,5 @@
 import { test } from '../_fixtures/fixtures';
-import { CommentsApi } from '../../src/api/resources/CommentsApi';
-import { ArticlesApi } from '../../src/api/resources/ArticlesApi';
+import { ApiComposite } from '../../src/api/ApiComposite';
 
 test.use({ usersNumber: 1 });
 
@@ -9,15 +8,16 @@ test(`Create new comment without auth token`, async ({
   userRequests,
   request,
 }) => {
-  const articlesApi = new ArticlesApi(userRequests[0]);
-  const createArticleRes = await articlesApi.createArticle(
+  const apiAuth = new ApiComposite(userRequests[0]);
+  const apiAnon = new ApiComposite(request);
+
+  const createArticleRes = await apiAuth.articles.createArticle(
     { title: `t-${Date.now()}`, description: 'd', body: 'b', tagList: [] },
     registeredUser.token,
   );
-  await articlesApi.assertSuccessResponseCode(createArticleRes);
+  await apiAuth.articles.assertSuccessResponseCode(createArticleRes);
   const slug = (await createArticleRes.json()).article.slug;
 
-  const anonComments = new CommentsApi(request);
-  const res = await anonComments.createComment(slug, 'should fail', null);
-  await anonComments.assertForbiddenOrUnauthorizedResponseCode(res);
+  const res = await apiAnon.comments.createComment(slug, 'should fail', null);
+  await apiAnon.comments.assertForbiddenOrUnauthorizedResponseCode(res);
 });
