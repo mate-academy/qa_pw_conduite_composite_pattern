@@ -2,8 +2,11 @@ import { expect } from '@playwright/test';
 import { testStep } from '../common/helpers/pw';
 import {
   SUCCESS_CODE,
+  CREATED_CODE,
+  NO_CONTENT_CODE,
   UNPROCESSABLE_ENTITY,
   UNAUTHORIZED,
+  FORBIDDEN,
   NOT_FOUND,
   INTERNAL_SERVER_ERROR,
 } from '../constants/responceCodes';
@@ -40,12 +43,39 @@ export class BaseApi {
     });
   }
 
-  async assertSuccessResponseCode(response) {
-    await this.assertResponseCode(response, SUCCESS_CODE);
+  async assertSuccessResponseCode(response, method = 'OK') {
+    await this.step(`Assert successful response code`, async () => {
+      const status = this.parseStatus(response);
+
+      let expectedCode;
+      switch (method.toUpperCase()) {
+        case 'GET':
+          expectedCode = SUCCESS_CODE;
+          break;
+        case 'POST':
+          expectedCode = [SUCCESS_CODE, CREATED_CODE];
+          break;
+        case 'DELETE':
+          expectedCode = NO_CONTENT_CODE;
+          break;
+        default:
+          expectedCode = [SUCCESS_CODE, CREATED_CODE, NO_CONTENT_CODE];
+      }
+
+      if (Array.isArray(expectedCode)) {
+        expect(expectedCode).toContain(status);
+      } else {
+        expect(status).toBe(expectedCode);
+      }
+    });
   }
 
   async assertUnprocessableEntityResponseCode(response) {
     await this.assertResponseCode(response, UNPROCESSABLE_ENTITY);
+  }
+
+  async assertForbiddenResponseCode(response) {
+    await this.assertResponseCode(response, FORBIDDEN);
   }
 
   async assertUnauthorizedResponseCode(response) {
