@@ -9,24 +9,30 @@ export class ArticlesApi extends BaseApi {
   }
   async createArticle(article, token = null) {
     return await this.step(`Create new article`, async () => {
-      return await this.client.post(ROUTES.articles().index, {
+      const response = await this.client.post(ROUTES.articles().index, {
         data: { article },
         headers: {
           authorization: `Token ${token}`,
           ...this._headers,
         },
       });
+      expect(response.status()).toBe(200);
+
+      return await response.json();
     });
   }
 
   async getArticleBySlug(slug, token = null) {
     return await this.step(`Get article by it's slug`, async () => {
-      return await this.client.get(ROUTES.articles(slug).single, {
+      const response = await this.client.get(ROUTES.articles(slug).single, {
         headers: {
           authorization: `Token ${token}`,
           ...this._headers,
         },
       });
+      expect(response.status()).toBe(200);
+
+      return await response.json();
     });
   }
 

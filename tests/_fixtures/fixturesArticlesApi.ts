@@ -3,9 +3,9 @@ import { ArticlesApi } from '../../src/api/resources/ArticlesApi';
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 
 export const test = base.extend<{
-  articlesApi;
-  articleWithoutTags;
-  articleWithOneTag;
+  articlesApi: ArticlesApi;
+  articleWithoutTags: ReturnType<typeof generateNewArticleData>;
+  articleWithOneTag: ReturnType<typeof generateNewArticleData>;
 }>({
   articlesApi: async ({ request }, use) => {
     const client = new ArticlesApi(request);
