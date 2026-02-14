@@ -15,4 +15,8 @@ export const ROUTES = {
     single: `${ROOT}/articles/${slug}`,
     favorite: `${ROOT}/articles/${slug}/favorite`,
   }),
+  comments: (slug, commentId = null) => ({
+    index: `${ROOT}/articles/${slug}/comments`,
+    delete: `${ROOT}/articles/${slug}/comments/${commentId}`
+  })
 };
