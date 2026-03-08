@@ -6,6 +6,7 @@ import {
   UNAUTHORIZED,
   NOT_FOUND,
   INTERNAL_SERVER_ERROR,
+  FORBIDDEN,
 } from '../constants/responceCodes';
 
 export class BaseApi {
@@ -58,6 +59,11 @@ export class BaseApi {
 
   async assertInternalServerErrorResponseCode(response) {
     await this.assertResponseCode(response, INTERNAL_SERVER_ERROR);
+  }
+
+  // метод теперь внутри класса
+  async assertForbiddenResponseCode(response) {
+    await this.assertResponseCode(response, FORBIDDEN);
   }
 
   async assertBodyIsNotEmpty(response) {
