@@ -1,6 +1,7 @@
 import { UsersApi } from './resources/UsersApi';
 import { ProfilesApi } from './resources/ProfilesApi';
 import { ArticlesApi } from './resources/ArticlesApi';
+import { CommentsApi } from './resources/CommentsApi';
 
 export class ApiComposite {
   constructor(client) {
@@ -8,6 +9,7 @@ export class ApiComposite {
     this.users = new UsersApi(client);
     this.profiles = new ProfilesApi(client);
     this.articles = new ArticlesApi(client);
+    this.comments = new CommentsApi(client);
   }
 
   async registerNewUser(userData, token = null) {
@@ -42,7 +44,27 @@ export class ApiComposite {
     return await this.articles.getArticleBySlug(slug, token);
   }
 
+  async createComment(slug, token = null, comment) {
+    return await this.comments.createComment(slug, token, comment);
+  }
+
+  async deleteComment(slug, token = null, commentID) {
+    return await this.comments.deleteComment(slug, token, commentID);
+  }
+
   async assertSuccessResponseCode(response) {
     await this.users.assertSuccessResponseCode(response);
+  }
+
+  async assertUnauthorizedResponseCode(response) {
+    await this.users.assertUnauthorizedResponseCode(response);
+  }
+
+  async assertUnprocessableEntityResponseCode(response) {
+    await this.users.assertUnprocessableEntityResponseCode(response);
+  }
+
+  async assertForbiddenResponseCode(response) {
+    await this.users.assertForbiddenResponseCode(response);
   }
 }
