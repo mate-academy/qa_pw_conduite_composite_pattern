@@ -2,10 +2,12 @@ import { expect } from '@playwright/test';
 import { testStep } from '../common/helpers/pw';
 import {
   SUCCESS_CODE,
+  NO_CONTENT,
   UNPROCESSABLE_ENTITY,
   UNAUTHORIZED,
   NOT_FOUND,
   INTERNAL_SERVER_ERROR,
+  FORBIDDEN,
 } from '../constants/responceCodes';
 
 export class BaseApi {
@@ -44,12 +46,20 @@ export class BaseApi {
     await this.assertResponseCode(response, SUCCESS_CODE);
   }
 
+  async assertNoContentResponseCode(response) {
+    await this.assertResponseCode(response, NO_CONTENT);
+  }
+
   async assertUnprocessableEntityResponseCode(response) {
     await this.assertResponseCode(response, UNPROCESSABLE_ENTITY);
   }
 
   async assertUnauthorizedResponseCode(response) {
     await this.assertResponseCode(response, UNAUTHORIZED);
+  }
+
+  async assertForbiddenStatusCode(response) {
+    await this.assertResponseCode(response, FORBIDDEN);
   }
 
   async assertNotFoundResponseCode(response) {
