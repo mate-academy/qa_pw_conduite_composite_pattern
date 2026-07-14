@@ -17,15 +17,15 @@ test.beforeEach(async ({ registeredUsers, articlesApi, articleWithOneTag }) => {
   slug = await articlesApi.parseSlugFromResponse(response);
 });
 
-test(`Create new comment without auth token`, async ({
+test(`Create new comment without body`, async ({
   registeredUsers,
-  commentsApi,
+  api,
 }) => {
-  const response = await commentsApi.createComment(
+  const response = await api.createComment(
     comment,
     slug,
     registeredUsers[1].token,
   );
 
-  await commentsApi.assertSuccessResponseCode(response);
+  await api.assertSuccessResponseCode(response);
 });

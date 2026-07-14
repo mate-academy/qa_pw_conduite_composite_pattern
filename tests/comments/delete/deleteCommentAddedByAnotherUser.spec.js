@@ -20,23 +20,23 @@ test.beforeEach(async ({ registeredUsers, articlesApi, articleWithOneTag }) => {
 });
 
 test(`Delete comment added by the another user`, async ({
-  commentsApi,
+  api,
   registeredUsers,
 }) => {
-  const response = await commentsApi.createComment(
+  const response = await api.createComment(
     comment,
     slug,
     registeredUsers[0].token,
   );
 
-  await commentsApi.assertSuccessResponseCode(response);
-  commentId = await commentsApi.parseCommentIdFromResponse(response);
+  await api.assertSuccessResponseCode(response);
+  commentId = await api.parseCommentIdFromResponse(response);
 
-  const responseDelete = await commentsApi.deleteComment(
+  const responseDelete = await api.deleteComment(
     slug,
     commentId,
     registeredUsers[1].token,
   );
 
-  await commentsApi.assertUnauthorizedResponseCode(responseDelete);
+  await api.assertUnauthorizedResponseCode(responseDelete);
 });

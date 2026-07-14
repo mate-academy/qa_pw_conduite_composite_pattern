@@ -19,12 +19,12 @@ test.beforeEach(async ({ registeredUsers, articlesApi, articleWithOneTag }) => {
 });
 
 test(`Create new comment without auth token`, async ({
-  commentsApi,
+  api,
 }) => {
-  const response = await commentsApi.createComment(
+  const response = await api.createComment(
     comment,
     slug,
   );
 
-  await commentsApi.assertUnauthorizedResponseCode(response);
+  await api.assertUnauthorizedResponseCode(response);
 });

@@ -19,14 +19,14 @@ test.beforeEach(async ({ registeredUsers, articlesApi, articleWithOneTag }) => {
 });
 
 test(`Create new comment to the article created by another user`, async ({
-  commentsApi,
+  api,
   registeredUsers,
 }) => {
-  const response = await commentsApi.createComment(
+  const response = await api.createComment(
     comment,
     slug,
     registeredUsers[1].token,
   );
 
-  await commentsApi.assertSuccessResponseCode(response);
+  await api.assertSuccessResponseCode(response);
 });

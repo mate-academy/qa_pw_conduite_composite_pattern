@@ -49,10 +49,10 @@ export class ApiComposite {
   }
 
   async createComment(comment, slug, token = null) {
-    await this.comments.createComment(comment, slug, token);
+    return await this.comments.createComment(comment, slug, token);
   }
 
   async deleteComment(slug, commentId, token = null) {
-    await this.comments.deleteComment(slug, commentId, token);
+    return await this.comments.deleteComment(slug, commentId, token);
   }
 }
