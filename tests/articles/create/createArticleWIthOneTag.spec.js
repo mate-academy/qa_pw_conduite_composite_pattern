@@ -2,22 +2,22 @@ import { test } from '../../_fixtures/fixtures';
 
 test(`Create article with one tag`, async ({
   registeredUser,
-  articlesApi,
+  api,
   articleWithOneTag,
 }) => {
   const article = articleWithOneTag;
-  const response = await articlesApi.createArticle(
+  const response = await api.articles.createArticle(
     article,
     registeredUser.token,
   );
 
-  await articlesApi.assertSuccessResponseCode(response);
-  await articlesApi.assertResponseBodyContainsSlug(response);
-  await articlesApi.assertArticleTitleHasCorrectValue(response, article.title);
-  await articlesApi.assertArticleDescriptionHasCorrectValue(
+  await api.articles.assertSuccessResponseCode(response);
+  await api.articles.assertResponseBodyContainsSlug(response);
+  await api.articles.assertArticleTitleHasCorrectValue(response, article.title);
+  await api.articles.assertArticleDescriptionHasCorrectValue(
     response,
     article.description,
   );
-  await articlesApi.assertArticleBodyHasCorrectValue(response, article.body);
-  await articlesApi.assertArticleTagsHasCorrectValue(response, article.tagList);
+  await api.articles.assertArticleBodyHasCorrectValue(response, article.body);
+  await api.articles.assertArticleTagsHasCorrectValue(response, article.tagList);
 });

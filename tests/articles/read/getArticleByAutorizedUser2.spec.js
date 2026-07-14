@@ -16,23 +16,23 @@ test.beforeEach(async ({ registeredUsers, articlesApi, articleWithOneTag }) => {
 });
 
 test(`Get an article created by user1 by authorized user 2`, async ({
-  articlesApi,
+  api,
   articleWithOneTag,
   registeredUsers,
 }) => {
   const article = articleWithOneTag;
-  const response = await articlesApi.getArticleBySlug(
+  const response = await api.articles.getArticleBySlug(
     slug,
     registeredUsers[1].token,
   );
 
-  await articlesApi.assertSuccessResponseCode(response);
-  await articlesApi.assertResponseBodyContainsSlug(response);
-  await articlesApi.assertArticleTitleHasCorrectValue(response, article.title);
-  await articlesApi.assertArticleDescriptionHasCorrectValue(
+  await api.articles.assertSuccessResponseCode(response);
+  await api.articles.assertResponseBodyContainsSlug(response);
+  await api.articles.assertArticleTitleHasCorrectValue(response, article.title);
+  await api.articles.assertArticleDescriptionHasCorrectValue(
     response,
     article.description,
   );
-  await articlesApi.assertArticleBodyHasCorrectValue(response, article.body);
-  await articlesApi.assertArticleTagsHasCorrectValue(response, article.tagList);
+  await api.articles.assertArticleBodyHasCorrectValue(response, article.body);
+  await api.articles.assertArticleTagsHasCorrectValue(response, article.tagList);
 });

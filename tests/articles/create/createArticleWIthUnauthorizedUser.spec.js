@@ -1,11 +1,11 @@
 import { test } from '../../_fixtures/fixtures';
 
-test(`Create article with unautorized user`, async ({
-  articlesApi,
+test(`Create article with unauthorized user`, async ({
+  api,
   articleWithoutTags,
 }) => {
   const token = '';
-  const response = await articlesApi.createArticle(articleWithoutTags, token);
+  const response = await api.articles.createArticle(articleWithoutTags, token);
 
-  await articlesApi.assertUnauthorizedResponseCode(response);
+  await api.articles.assertUnauthorizedResponseCode(response);
 });

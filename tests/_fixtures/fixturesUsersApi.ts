@@ -2,14 +2,21 @@ import { test as base } from '@playwright/test';
 import { request as apiRequest } from '@playwright/test';
 import { UsersApi } from '../../src/api/resources/UsersApi';
 import { ApiClientFacade } from '../../src/api/ApiClientFacade';
+import {ApiComposite} from '../../src/api/ApiComposite';
 
 export const test = base.extend<{
   usersApi;
   registeredUser;
   registeredUsers;
   userRequests;
+  api;
+
 }>({
-  usersApi: async ({ request, logger }, use) => {
+  api: async ({ request }, use) => {
+  const api = new ApiComposite(request);
+  await use(api);
+},
+usersApi: async ({ request, logger }, use) => {
     const apiClientFacade = new ApiClientFacade({ request, logger });
     const client = new UsersApi(apiClientFacade);
 

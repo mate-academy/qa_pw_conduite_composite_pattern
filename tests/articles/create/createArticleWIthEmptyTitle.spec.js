@@ -2,16 +2,16 @@ import { test } from '../../_fixtures/fixtures';
 
 test(`Create article with empty title`, async ({
   registeredUser,
-  articlesApi,
+  api,
   articleWithoutTags,
 }) => {
   const article = articleWithoutTags;
   article['title'] = null;
 
-  const response = await articlesApi.createArticle(
+  const response = await api.articles.createArticle(
     article,
     registeredUser.token,
   );
 
-  await articlesApi.assertInternalServerErrorResponseCode(response);
+  await api.articles.assertInternalServerErrorResponseCode(response);
 });

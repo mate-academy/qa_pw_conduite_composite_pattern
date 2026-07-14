@@ -2,31 +2,31 @@ import { test } from '../../_fixtures/fixtures';
 
 let slug;
 
-test.beforeEach(async ({ registeredUser, articlesApi, articleWithOneTag }) => {
-  const response = await articlesApi.createArticle(
+test.beforeEach(async ({ registeredUser, api, articleWithOneTag }) => {
+  const response = await api.articles.createArticle(
     articleWithOneTag,
     registeredUser.token,
   );
 
-  await articlesApi.assertSuccessResponseCode(response);
+  await api.articles.assertSuccessResponseCode(response);
 
-  slug = await articlesApi.parseSlugFromResponse(response);
+  slug = await api.articles.parseSlugFromResponse(response);
 });
 
 test(`Get an article by unauthorized user`, async ({
-  articlesApi,
+  api,
   articleWithOneTag,
 }) => {
   const article = articleWithOneTag;
-  const response = await articlesApi.getArticleBySlug(slug, '');
+  const response = await api.articles.getArticleBySlug(slug, '');
 
-  await articlesApi.assertSuccessResponseCode(response);
-  await articlesApi.assertResponseBodyContainsSlug(response);
-  await articlesApi.assertArticleTitleHasCorrectValue(response, article.title);
-  await articlesApi.assertArticleDescriptionHasCorrectValue(
+  await api.articles.assertSuccessResponseCode(response);
+  await api.articles.assertResponseBodyContainsSlug(response);
+  await api.articles.assertArticleTitleHasCorrectValue(response, article.title);
+  await api.articles.assertArticleDescriptionHasCorrectValue(
     response,
     article.description,
   );
-  await articlesApi.assertArticleBodyHasCorrectValue(response, article.body);
-  await articlesApi.assertArticleTagsHasCorrectValue(response, article.tagList);
+  await api.articles.assertArticleBodyHasCorrectValue(response, article.body);
+  await api.articles.assertArticleTagsHasCorrectValue(response, article.tagList);
 });
