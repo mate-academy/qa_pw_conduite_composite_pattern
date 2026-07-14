@@ -6,6 +6,7 @@ import {
   UNAUTHORIZED,
   NOT_FOUND,
   INTERNAL_SERVER_ERROR,
+  SUCCESS_CODE_DELETE,
 } from '../constants/responceCodes';
 
 export class BaseApi {
@@ -42,6 +43,10 @@ export class BaseApi {
 
   async assertSuccessResponseCode(response) {
     await this.assertResponseCode(response, SUCCESS_CODE);
+  }
+
+  async assertSuccessDeleteResponseCode(response) {
+    await this.assertResponseCode(response, SUCCESS_CODE_DELETE);
   }
 
   async assertUnprocessableEntityResponseCode(response) {
