@@ -8,14 +8,21 @@ export class CommentsApi extends BaseApi {
     this._headers = { 'content-type': 'application/json' };
   }
 
+  buildHeaders(token) {
+    const headers = { ...this._headers };
+
+    if (token) {
+      headers.authorization = `Token ${token}`;
+    }
+
+    return headers;
+  }
+
   async createComment(slug, comment, token = null) {
     return await this.step(`Create new comment`, async () => {
       return await this.client.post(ROUTES.comments(slug).index, {
         data: { comment },
-        headers: {
-          authorization: `Token ${token}`,
-          ...this._headers,
-        },
+        headers: this.buildHeaders(token),
       });
     });
   }
@@ -23,10 +30,7 @@ export class CommentsApi extends BaseApi {
   async deleteComment(slug, commentId, token = null) {
     return await this.step(`Delete comment`, async () => {
       return await this.client.delete(ROUTES.comments(slug, commentId).single, {
-        headers: {
-          authorization: `Token ${token}`,
-          ...this._headers,
-        },
+        headers: this.buildHeaders(token),
       });
     });
   }
