@@ -4,6 +4,8 @@ import {
   SUCCESS_CODE,
   UNPROCESSABLE_ENTITY,
   UNAUTHORIZED,
+  FORBIDDEN,
+  NO_CONTENT,
   NOT_FOUND,
   INTERNAL_SERVER_ERROR,
 } from '../constants/responceCodes';
@@ -50,6 +52,14 @@ export class BaseApi {
 
   async assertUnauthorizedResponseCode(response) {
     await this.assertResponseCode(response, UNAUTHORIZED);
+  }
+
+  async assertForbiddenResponseCode(response) {
+    await this.assertResponseCode(response, FORBIDDEN);
+  }
+
+  async assertNoContentResponseCode(response) {
+    await this.assertResponseCode(response, NO_CONTENT);
   }
 
   async assertNotFoundResponseCode(response) {
