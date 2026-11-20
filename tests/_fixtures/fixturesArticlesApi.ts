@@ -1,14 +1,21 @@
 import { test as base } from '@playwright/test';
 import { ArticlesApi } from '../../src/api/resources/ArticlesApi';
+import { CommentsApi } from '../../src/api/resources/CommentsApi';
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 
 export const test = base.extend<{
   articlesApi;
   articleWithoutTags;
   articleWithOneTag;
+  commentsApi;
 }>({
   articlesApi: async ({ request }, use) => {
     const client = new ArticlesApi(request);
+
+    await use(client);
+  },
+  commentsApi: async ({ request }, use) => {
+    const client = new CommentsApi(request);
 
     await use(client);
   },
