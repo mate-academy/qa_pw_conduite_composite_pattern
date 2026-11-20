@@ -1,6 +1,4 @@
 import { test } from '../../_fixtures/fixtures';
-import { SUCCESS_CODE } from '../../../src/constants/responceCodes';
-import { expect } from '@playwright/test';
 
 test.describe('Create comment without body field', () => {
   test.use({ usersNumber: 2 });
@@ -29,6 +27,11 @@ test.describe('Create comment without body field', () => {
   test('Create new comment without body field', async ({ api }) => {
     const response = await api.createComment(slug, {}, commenter.token);
 
-    expect(response.status()).toBe(SUCCESS_CODE);
+    await api.comments.assertUnprocessableEntityResponseCode(response);
+    await api.comments.assertErrorMessageInResponseBody(
+      response,
+      "body:can't be blank",
+      'body',
+    );
   });
 });

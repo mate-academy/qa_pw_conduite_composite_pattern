@@ -3,7 +3,6 @@ import { test as genericTest } from './fixturesGeneric';
 import { test as usersApiTest } from './fixturesUsersApi';
 import { test as profilesApiTest } from './fixturesProfilesApi';
 import { test as articlesApiTest } from './fixturesArticlesApi';
-import { test as commentsApiTest } from './fixturesArticlesApi';
 import { test as testDataGeneratorsTest } from './fixturesTestDataGenerators';
 import { test as apiTest } from './fixturesApi';
 
@@ -14,5 +13,4 @@ export const test = mergeTests(
   articlesApiTest,
   testDataGeneratorsTest,
   apiTest,
-  commentsApiTest,
 );
