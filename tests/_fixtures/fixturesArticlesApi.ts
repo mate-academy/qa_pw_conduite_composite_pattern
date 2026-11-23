@@ -3,12 +3,16 @@ import { ArticlesApi } from '../../src/api/resources/ArticlesApi';
 import { CommentsApi } from '../../src/api/resources/CommentsApi';
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 
-export const test = base.extend<{
-  articlesApi;
-  articleWithoutTags;
-  articleWithOneTag;
-  commentsApi;
-}>({
+type ArticleData = ReturnType<typeof generateNewArticleData>;
+
+type ArticlesApiFixtures = {
+  articlesApi: ArticlesApi;
+  commentsApi: CommentsApi;
+  articleWithoutTags: ArticleData;
+  articleWithOneTag: ArticleData;
+};
+
+export const test = base.extend<ArticlesApiFixtures>({
   articlesApi: async ({ request }, use) => {
     const client = new ArticlesApi(request);
 
